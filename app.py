@@ -1,23 +1,19 @@
-from flask_spell_check.main import bp
-
-from flask import (
-    render_template,
-    flash,
-    redirect,
-    url_for,
-    request,
-    g,
-    jsonify,
-    current_app,
-    session,
-)
-
-from flask_spell_check.constants import db
+import binascii
 import functools
+import os
 import subprocess
-
 from tempfile import NamedTemporaryFile
 
+from flask import (Flask, current_app, flash, g, jsonify, redirect,
+                   render_template, request, session, url_for)
+from flask_wtf import CSRFProtect
+
+db = {}
+
+app = Flask(__name__)
+app.config["SECRET_KEY"] = binascii.hexlify(os.urandom(24))
+
+csrf = CSRFProtect(app)
 
 def login_required(view):
     """View decorator that redirects anonymous users to the login page."""
@@ -25,14 +21,14 @@ def login_required(view):
     @functools.wraps(view)
     def wrapped_view(**kwargs):
         if g.user is None:
-            return redirect(url_for("main.login"))
+            return redirect(url_for("login"))
 
         return view(**kwargs)
 
     return wrapped_view
 
 
-@bp.before_app_request
+@app.before_request
 def load_logged_in_user():
     """If a user id is stored in the session, load the user object from
     the database into ``g.user``."""
@@ -44,13 +40,13 @@ def load_logged_in_user():
         g.user = db.get(username)
 
 
-@bp.route("/", methods=["GET", "POST"])
+@app.route("/", methods=["GET", "POST"])
 @login_required
 def index():
     return "Hello, World"
 
 
-@bp.route("/register", methods=["GET", "POST"])
+@app.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == "POST":
         username = request.form.get("uname", None)
@@ -82,7 +78,7 @@ def register():
     return render_template("register.html")
 
 
-@bp.route("/login", methods=["GET", "POST"])
+@app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
         username = request.form.get("uname", None)
@@ -127,11 +123,11 @@ def login():
     return render_template("login.html")
 
 
-@bp.route("/spell_check", methods=["GET", "POST"])
+@app.route("/spell_check", methods=["GET", "POST"])
 @login_required
 def spell_check():
     if request.method == "POST":
-        text = request.form.get("text", None)
+        text = request.form.get("inputtext", None)
 
         if text:
             text_file = Name()
@@ -141,7 +137,7 @@ def spell_check():
                 text_file.name,
                 os.path.join(app.instance_path, "dictionary.txt"),
             )
-
+            current_app.logger.info(args)
             result = subprocess.check_output(args)
 
             mispelled = result.replace("\n", ", ")[:-2]

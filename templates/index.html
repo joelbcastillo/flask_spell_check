@@ -5,7 +5,7 @@
 </head>
 
 <body>
-    <form action="{{ url_for('main.spell_check') }}" method="POST">
+    <form action="{{ url_for('spell_check') }}" method="POST">
         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
         <label for="inputtext">Input Text</label><br />
         <textarea id="inputtext" name="inputtext" required></textarea><br /><br />
