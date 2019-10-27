@@ -7,7 +7,7 @@
         {% if success_message %}
         <p id="success"> {{ success_message }}</p>
         {% endif %}
-        <form action="{{ url_for('main.register') }}" method="POST"> 
+        <form action="{{ url_for('register') }}" method="POST"> 
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
             <label for="uname">Username: </label>
             <input type="text" id="uname" name="uname" required>
