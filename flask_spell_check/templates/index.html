@@ -5,6 +5,7 @@
 </head>
 
 <body>
+    <p>Username: {{ session['username'] }}</p>
     <form action="{{ url_for('main.spell_check') }}" method="POST">
         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
         <label for="inputtext">Input Text</label><br />

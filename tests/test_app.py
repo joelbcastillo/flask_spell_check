@@ -40,3 +40,9 @@ def test_login(client, app):
 
     response = client.post("/login", data={"uname": "a", "2fa": "12345"})
     assert b"""<p id="result"> Incorrect</p>""" in response.data
+
+def test_login_required(client, app):
+    response = client.get('/spell_check')
+
+    assert 302 == response.status_code
+    assert "http://localhost/login" == response.headers['Location']
