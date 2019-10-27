@@ -12,7 +12,6 @@ bp = Blueprint('main', __name__)
 db = {}
 
 
-
 def login_required(view):
     """View decorator that redirects anonymous users to the login page."""
 
@@ -25,6 +24,16 @@ def login_required(view):
 
     return wrapped_view
 
+@bp.after_request
+def add_security_headers(response):
+    response.headers['Content-Security-Policy'] = "default-src 'self'"
+    response.headers['X-Content-Type-Options'] = 'nosniff'
+    response.headers['X-Frame-Options'] = 'SAMEORIGIN'
+    response.headers['X-XSS-Protection'] = '1; mode=block'
+    if g.user is not None:
+        response.set_cookie('username', session.get('username'), secure=False, httponly=True, samesite='Lax')
+
+    return response
 
 @bp.before_request
 def load_logged_in_user():
