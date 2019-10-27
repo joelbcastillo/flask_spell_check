@@ -25,10 +25,6 @@ def create_app(config_class=Config):
     except OSError:
         pass
 
-    from flask_spell_check import db
-
-    db.init_app(app)
-
     from flask_spell_check.main import bp as main_bp
 
     app.register_blueprint(main_bp)
