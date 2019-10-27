@@ -1,0 +1,29 @@
+<html>
+
+<head>
+    <title>Flask Spell Check - Login</title>
+</head>
+
+<body>
+    {% if result_message %}
+    <p id="success"> {{ result_message }}</p>
+    {% endif %}
+    <form action="{{ url_for('main.login') }}" method="POST">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+        <label for="uname">Username: </label>
+        <input type="text" id="uname" name="uname" required>
+        <br />
+        <br />
+        <label for="pword">Password: </label>
+        <input type="password" id="pword" name="pword" required>
+        <br />
+        <br />
+        <label for="2fa">2 Factor Code: </label>
+        <input type="text" id="2fa" name="2fa" required>
+        <br />
+        <br />
+        <button type="submit">Login</button>
+    </form>
+</body>
+
+</html>
