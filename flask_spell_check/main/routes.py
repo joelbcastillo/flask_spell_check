@@ -16,6 +16,8 @@ from flask_spell_check.constants import db
 import functools
 import subprocess
 
+from tempfile import NamedTemporaryFile
+
 
 def login_required(view):
     """View decorator that redirects anonymous users to the login page."""
@@ -125,10 +127,23 @@ def login():
     return render_template("login.html")
 
 
-@bp.route('/spell_check', methods=["GET", "POST"])
+@bp.route("/spell_check", methods=["GET", "POST"])
+@login_required
 def spell_check():
     if request.method == "POST":
         text = request.form.get("text", None)
 
         if text:
-            
+            text_file = Name()
+            text_file.write(text)
+            args = (
+                os.path.join(app.instance_path, "a.out"),
+                text_file.name,
+                os.path.join(app.instance_path, "dictionary.txt"),
+            )
+
+            result = subprocess.check_output(args)
+
+            mispelled = result.replace("\n", ", ")[:-2]
+            return render_template("index.html", mispelled=mispelled, text=text)
+    return render_template("index.html")
