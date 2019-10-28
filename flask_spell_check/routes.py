@@ -30,7 +30,7 @@ def add_security_headers(response):
     response.headers['X-Content-Type-Options'] = 'nosniff'
     response.headers['X-Frame-Options'] = 'SAMEORIGIN'
     response.headers['X-XSS-Protection'] = '1; mode=block'
-    if g.user is not None:
+    if session.get('username') is not None:
         response.set_cookie('username', session.get('username'), secure=False, httponly=True, samesite='Lax')
 
     return response
