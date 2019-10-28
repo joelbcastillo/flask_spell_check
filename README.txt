@@ -47,6 +47,7 @@ The final concern with regards to user input is the use of a binary on the CLI. 
 
 Some addititional headers that have been added in to each response (using the `after_request` hook for flask):
     - X-Content-Type-Options - Prevent XSS abuse based on browser guessing the content-type of the response
+    - Content Security Policy - frame-ancestors 'none'; This specifies that the page cannot be embedded in any frames, applets, objects, iframes, or embed tags. This directive does not fall back to the default-src directive if not defined so must be explicitly defined.
     - X-Frame-Options - Prevent our site from being loaded in an iframe (clickjacking attacks)
     - X-XSS-Protection - Prevent loading of the page if the request contains possible javascript code and the response contains the same data.
     - Set-Cookie - Cookies are set to HttpOnly to prevent them from being read by javascript, Lax to prevent submitting CSRF-prone requests from external sites, and Secure is set to false because the autograder may not support HTTPS for the application (but it would be ideal to set this to True.)
