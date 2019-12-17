@@ -3,12 +3,12 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate, MigrateCommand
 from flask_login import LoginManager, current_user
 from flask_bcrypt import Bcrypt
-from flask_wtf import CsrfProtect
+from flask_wtf import CSRFProtect
 from flask_script import Manager
 from config import Config, config
 
 db = SQLAlchemy()
-csrf = CsrfProtect()
+csrf = CSRFProtect()
 login_manager = LoginManager()
 bcrypt = Bcrypt()
 manager = Manager()
@@ -23,7 +23,6 @@ def create_app(config_name="default"):
     """
     app = Flask(__name__)
     app.config.from_object(config[config_name])
-    config[config_name].init_app(app)
 
     db.init_app(app)
     csrf.init_app(app)
@@ -57,3 +56,5 @@ def create_app(config_name="default"):
     from . import models, views
 
     app.register_blueprint(spell_checker)
+
+    return app

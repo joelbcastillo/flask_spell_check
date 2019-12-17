@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% block body %}
+    <p>Query ID: <span id="queryid">{{ spell_check_query.id }}</span></p>
+    <p>Username: <span id="username">{{ spell_check_query.username }}</span></p>
+    <p>Text: <span id="querytext">{{ spell_check_query.text }}</span></p>
+    <p>Result: <span id="result">{{ spell_check_query.result }}</span></p>
+{% endblock %}

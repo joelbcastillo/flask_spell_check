@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block body %}
+    <table>
+        <tr>
+            <th>Username</th>
+            <th>User ID</th>
+        </tr>
+        {% for user in users %}
+            <tr>
+                <td>{{ user.username }}</td>
+                <td>{{ user.user_id }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+    <form action="" method="POST">
+        {{ form.hidden_tag() }}
+    <p>
+        {{ form.username.label }}
+    </p>
+    <p>
+        {{ form.username }}
+    </p>
+    <p>
+        {{ form.submit() }}
+    </p>
+    </form>
+{% endblock %}

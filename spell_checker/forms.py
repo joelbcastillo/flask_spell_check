@@ -20,9 +20,24 @@ class RegisterForm(FlaskForm):
     submit = SubmitField("Login")
 
     def validate(self):
-        return Users.query.filter_by(username=username.data).one_or_none() is None
+        return Users.query.filter_by(username=self.username.data).one_or_none() is None
 
 
 class SpellCheckForm(FlaskForm):
     input = StringField("Input", id="inputtext", validators=[DataRequired()])
     submit = SubmitField("Spell Check")
+
+
+class SpellCheckQueryHistoryForm(FlaskForm):
+    username = StringField("Username", id="userquery", validators=[DataRequired()])
+    submit = SubmitField("Query User")
+
+
+class AuthHistoryQueryForm(FlaskForm):
+    username = StringField("Username", id="userid", validators=[DataRequired()])
+    submit = SubmitField("Query User")
+
+
+class LoginHistoryForm(FlaskForm):
+    username = StringField("Username", id="userid", validators=[DataRequired()])
+    submit = SubmitField("Query User")

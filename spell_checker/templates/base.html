@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Spell Checker</title>
+</head>
+<body>
+<div>
+    <ul>
+        {% if current_user.is_anonymous %}
+            <li><a href="{{ url_for('spell_checker.login') }}">Login</a></li>
+            <li><a href="{{ url_for('spell_checker.register') }}">Register</a></li>
+        {% else %}
+            <li><a href="{{ url_for('spell_checker.spell_check') }}">Spell Check</a></li>
+            <li><a href="{{ url_for('spell_checker.history') }}">History</a></li>
+            {% if current_user.is_admin %}
+                <li><a href="{{ url_for('spell_checker.login_history') }}">Login History</a></li>
+            {% endif %}
+            <li><a href="{{ url_for('spell_checker.logout') }}">Logout</a></li>
+        {% endif %}
+    </ul>
+</div>
+<div>
+    {% with messages = get_flashed_messages(with_categories=True) %}
+        {% if messages %}
+            <ul>
+                <li name="{{ category }}" id="{{ category }}">{{ message }}</li>
+            </ul>
+        {% endif %}
+    {% endwith %}
+</div>
+{% block body %} {% endblock %}
+</body>
+</html>

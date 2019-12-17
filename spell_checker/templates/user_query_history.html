@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block body %}
+    <p id="" numqueries">{{ len(queries) }}</p>
+    <ul>
+        {% for q in queries %}
+            <li><a id="query{{ q.id }}" href={{ url_for('spell_checker.history', spell_check_query_id=q.id) }}>Query
+                #{{ q.id }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

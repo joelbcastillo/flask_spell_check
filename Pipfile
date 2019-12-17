@@ -12,6 +12,8 @@ flask-bcrypt = "*"
 flask-login = "*"
 flask-migrate = "*"
 flask-script = "*"
+python-dotenv = "*"
+ipython = "*"
 
 [requires]
 python_version = "3.7"

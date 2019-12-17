@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block body %}
+    <form action="" method="POST">
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.input.label }}
+        </p>
+        <p> {{ form.input }}</p>
+        <p> {{ form.submit() }}
+    </form>
+
+    {% if result %}
+        <p id="textout">{{ result.text }}</p>
+        <p id="result">{{ result.result }}</p>
+    {% endif %}
+{% endblock %}
