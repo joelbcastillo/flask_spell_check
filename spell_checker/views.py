@@ -68,7 +68,7 @@ def login():
     if form.validate_on_submit():
         user = Users.query.filter_by(username=form.username.data).one_or_none()
 
-        if not (user or user.check_password(form.password.data)):
+        if user is None or not user.check_password(form.password.data)):
             flash("Incorrect username or password", category="result")
             return redirect(url_for("spell_check.login"))
 
