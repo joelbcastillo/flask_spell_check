@@ -52,7 +52,7 @@ def register():
         db.session.add(user)
         db.session.commit()
 
-        flash("success")
+        flash("success", category='success')
 
         return redirect(url_for("spell_checker.login"))
 
@@ -69,18 +69,18 @@ def login():
         user = Users.query.filter_by(username=form.username.data).one_or_none()
 
         if not (user or user.check_password(form.password.data)):
-            flash("Incorrect username or password", "result")
+            flash("Incorrect username or password", category="result")
             return redirect(url_for("spell_check.login"))
 
         if user.two_factor is not None and not user.check_two_factor(
             form.two_factor.data
         ):
-            flash("Failure: Two-factor authentication", "result")
+            flash("Failure: Two-factor authentication", category="result")
             return redirect(url_for("spell_check.login"))
 
         login_user(user)
 
-        flash("success", "result")
+        flash("success", category="result")
 
         auth_event = AuthHistory(login_timestamp=dt.utcnow(), user_id=current_user.id)
 
