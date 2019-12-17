@@ -124,7 +124,7 @@ def spell_check():
 
         result = subprocess.check_output(args).decode("UTF-8")
 
-        result = result.replace("\n", ",")[:-2]
+        result = result.replace("\n", ", ")[:-2]
 
         spell_check_query = SpellCheckQuery(
             text=form.input.data, result=result, user_id=current_user.id
