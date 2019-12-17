@@ -133,7 +133,7 @@ def spell_check():
         db.session.commit()
 
         return render_template(
-            "spell_check.html", text=form.input.data.encode(), result=result
+            "spell_check.html", form=form, text=form.input.data.encode(), result=result
         )
     return render_template("spell_check.html", form=form)
 
