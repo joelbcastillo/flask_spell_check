@@ -70,13 +70,13 @@ def login():
 
         if user is None or not user.check_password(form.password.data):
             flash("Incorrect username or password", category="result")
-            return redirect(url_for("spell_check.login"))
+            return redirect(url_for("spell_checker.login"))
 
         if user.two_factor is not None and not user.check_two_factor(
             form.two_factor.data
         ):
             flash("Failure: Two-factor authentication", category="result")
-            return redirect(url_for("spell_check.login"))
+            return redirect(url_for("spell_checker.login"))
 
         login_user(user)
 
