@@ -180,7 +180,7 @@ def history(spell_check_query_id=None):
                 return abort(404)
         queries = SpellCheckQuery.query.filter_by(user_id=current_user.id).all()
         return render_template(
-            "user_query_history.html", queries=queries, user=u, form=None
+            "user_query_history.html", queries=queries, user=current_user, form=None
         )
 
 
