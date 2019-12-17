@@ -191,7 +191,7 @@ def login_history():
         form = LoginHistoryForm()
         users = Users.query.all()
         if form.validate_on_submit():
-            user = Users.query.filter_by(id=form.userid.data)
+            user = Users.query.filter_by(id=form.username.data)
             return render_template(
                 "login_history.html", form=form, users=users, user=user
             )
