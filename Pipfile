@@ -14,6 +14,7 @@ flask-migrate = "*"
 flask-script = "*"
 python-dotenv = "*"
 ipython = "*"
+pytest = "*"
 
 [requires]
 python_version = "3.7"
